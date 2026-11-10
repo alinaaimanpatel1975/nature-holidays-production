@@ -1,0 +1,607 @@
+.brochure-tours {
+  margin-top: 56px;
+}
+
+.brochure-tours-heading {
+  max-width: 600px;
+  margin-bottom: 26px;
+}
+
+.brochure-eyebrow {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.brochure-tours-heading h2 {
+  margin-top: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -1px;
+}
+
+.brochure-tours-heading > p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.brochure-collections {
+  display: grid;
+  gap: 12px;
+}
+
+.brochure-collection {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--white);
+  scroll-margin-top: 150px;
+}
+
+.brochure-collection > summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.brochure-collection > summary::-webkit-details-marker {
+  display: none;
+}
+
+.brochure-collection > summary:hover,
+.brochure-collection[open] > summary {
+  background: var(--sage);
+}
+
+.brochure-collection-number {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.brochure-collection-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.brochure-collection-title {
+  display: block;
+  color: var(--forest);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+
+.brochure-collection-description {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.brochure-collection-count {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.brochure-expand-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+
+.brochure-expand-icon::before,
+.brochure-expand-icon::after {
+  position: absolute;
+  top: 13px;
+  left: 7px;
+  width: 14px;
+  height: 2px;
+  background: var(--forest);
+  content: "";
+}
+
+.brochure-expand-icon::after {
+  transform: rotate(90deg);
+}
+
+.brochure-collection[open] .brochure-expand-icon::after {
+  display: none;
+}
+
+.brochure-collection-content {
+  padding: 8px 22px 22px;
+}
+
+.brochure-tour-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brochure-tour-list li {
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.brochure-tour-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 14px 4px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.brochure-tour-list a:hover {
+  color: var(--forest);
+  background: var(--ivory);
+}
+
+.brochure-tour-list a > span:last-child {
+  flex-shrink: 0;
+  color: var(--forest);
+  font-size: 18px;
+}
+
+.brochure-collection-note,
+.brochure-enquiry-note {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.brochure-collection-note {
+  margin: 12px 0;
+}
+
+.brochure-enquiry-note {
+  margin-top: 18px;
+}
+
+@media (max-width: 640px) {
+  .brochure-tours {
+    margin-top: 40px;
+  }
+
+  .brochure-tours-heading h2 {
+    font-size: 26px;
+  }
+
+  .brochure-collection > summary {
+    gap: 12px;
+    padding: 18px 14px;
+  }
+
+  .brochure-collection-number {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .brochure-collection-title {
+    font-size: 14px;
+  }
+
+  .brochure-collection-description {
+    font-size: 11px;
+  }
+
+  .brochure-collection-count {
+    display: none;
+  }
+
+  .brochure-collection-content {
+    padding: 8px 16px 18px;
+  }
+
+  .brochure-tour-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .brochure-tour-list a {
+    font-size: 12px;
+  }
+}
+/* EXPANDABLE INDIVIDUAL TOUR INFORMATION */
+
+.brochure-tour-detail-list {
+  display: grid;
+}
+
+.brochure-tour-detail {
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 150px;
+}
+
+.brochure-tour-detail:last-child {
+  border-bottom: 0;
+}
+
+.brochure-tour-detail > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 62px;
+  padding: 16px 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  list-style: none;
+  cursor: pointer;
+}
+
+.brochure-tour-detail > summary::-webkit-details-marker {
+  display: none;
+}
+
+.brochure-tour-detail > summary:hover {
+  color: var(--forest);
+  background: var(--ivory);
+}
+
+.brochure-tour-toggle {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--forest);
+  font-size: 18px;
+}
+
+.brochure-tour-detail[open] > summary {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.brochure-tour-detail[open] .brochure-tour-toggle {
+  transform: rotate(90deg);
+  border-color: var(--forest);
+  color: var(--white);
+  background: var(--forest);
+}
+
+.brochure-tour-information {
+  margin: 0 0 18px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--ivory);
+}
+
+.brochure-tour-type {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+}
+
+.brochure-tour-information h3 {
+  margin-top: 10px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+}
+
+.brochure-tour-highlights {
+  margin-top: 20px;
+}
+
+.brochure-tour-information h4 {
+  margin: 0;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brochure-tour-highlights p,
+.brochure-tour-introduction,
+.brochure-tour-confirmation p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.brochure-tour-introduction {
+  max-width: 720px;
+  margin-top: 16px;
+}
+
+.brochure-tour-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 32px;
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.brochure-tour-facts dt {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.brochure-tour-facts dd {
+  margin: 6px 0 0;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.brochure-tour-confirmation {
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 10px;
+  background: var(--sage);
+}
+
+.brochure-tour-enquire {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 44px;
+  margin-top: 22px;
+  padding: 12px 16px;
+  border-radius: 9px;
+  color: var(--white);
+  background: var(--forest);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.brochure-tour-enquire:hover {
+  background: #24564a;
+}
+
+.brochure-tour-enquire > span {
+  font-size: 18px;
+}
+
+@media (max-width: 640px) {
+  .brochure-tour-detail > summary {
+    gap: 12px;
+    padding: 14px 2px;
+    font-size: 12px;
+  }
+
+  .brochure-tour-information {
+    padding: 18px;
+  }
+
+  .brochure-tour-information h3 {
+    font-size: 19px;
+  }
+
+  .brochure-tour-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .brochure-tour-confirmation {
+    padding: 14px;
+  }
+
+  .brochure-tour-enquire {
+    width: 100%;
+  }
+}
+
+.brochure-tour-names {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brochure-tour-names li {
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .brochure-tour-names {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* =========================================
+   BROCHURE TOUR — CART & BOOKING CONTROLS
+========================================= */
+
+.brochure-tour-booking-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.brochure-tour-date {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+
+.brochure-tour-date > span,
+.brochure-tour-quantity > span {
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.brochure-tour-date input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text);
+  background: var(--white);
+  font: inherit;
+  font-size: 12px;
+}
+
+.brochure-tour-date input:focus {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px rgba(38, 83, 69, 0.09);
+}
+
+.brochure-tour-quantity {
+  display: grid;
+  gap: 9px;
+}
+
+.brochure-tour-quantity > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 46px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.brochure-tour-quantity button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--forest);
+  background: var(--sage);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.brochure-tour-quantity button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.brochure-tour-quantity strong {
+  min-width: 16px;
+  color: var(--forest);
+  font-size: 13px;
+  text-align: center;
+}
+
+.brochure-tour-actions {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.brochure-tour-enquire {
+  min-width: 180px;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.brochure-tour-enquire:focus-visible,
+.brochure-tour-quantity button:focus-visible {
+  outline: 3px solid rgba(38, 83, 69, 0.25);
+  outline-offset: 3px;
+}
+
+.brochure-tour-added {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  color: var(--forest);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.brochure-tour-added > span {
+  font-weight: 500;
+}
+
+.brochure-tour-added a {
+  color: var(--forest);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.brochure-tour-enquiry-note {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+@media (max-width: 640px) {
+  .brochure-tour-booking-controls {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .brochure-tour-quantity > div {
+    justify-content: flex-start;
+  }
+
+  .brochure-tour-actions {
+    width: 100%;
+  }
+
+  .brochure-tour-enquire {
+    width: 100%;
+  }
+
+  .brochure-tour-added {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

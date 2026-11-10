@@ -1,0 +1,340 @@
+.explore-services {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 48px 72px;
+  scroll-margin-top: 150px;
+}
+
+/* HEADING */
+
+.explore-services-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 28px;
+}
+
+.explore-services-eyebrow {
+  display: inline-block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+}
+
+.explore-services-heading h2 {
+  margin-top: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -1.1px;
+}
+
+.explore-services-heading > p {
+  max-width: 290px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* SERVICE CARDS */
+
+.explore-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.explore-service-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  color: var(--text);
+  background: var(--white);
+  text-align: left;
+}
+
+.explore-service-card:hover {
+  border-color: var(--forest);
+}
+
+.explore-service-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--sage);
+}
+
+.explore-service-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 450ms ease;
+}
+
+.explore-service-card:hover img,
+.explore-service-card:focus-visible img {
+  transform: scale(1.04);
+}
+
+.explore-service-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 27, 21, 0.12),
+    transparent 35%,
+    rgba(7, 27, 21, 0.72)
+  );
+  pointer-events: none;
+}
+
+.explore-service-number {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ffffff70;
+  border-radius: 50%;
+  color: white;
+  background: #173d3580;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.explore-service-subtitle {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+.explore-service-content {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+}
+
+.explore-service-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.explore-service-title-row h3 {
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+.explore-service-arrow {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--forest);
+  font-size: 20px;
+}
+
+.explore-service-card:hover .explore-service-arrow {
+  border-color: var(--forest);
+  color: var(--white);
+  background: var(--forest);
+}
+
+.explore-service-content > p {
+  max-width: 280px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* SERVICE INFORMATION DIALOG */
+
+.explore-service-dialog {
+  width: min(520px, calc(100% - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  background: var(--ivory);
+}
+
+.explore-service-dialog::backdrop {
+  background: rgba(7, 27, 21, 0.7);
+}
+
+.explore-service-dialog-content {
+  padding: 28px;
+}
+
+.explore-service-dialog-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.explore-service-close {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--forest);
+  background: transparent;
+  font-size: 25px;
+}
+
+.explore-service-dialog-content h2 {
+  margin-top: 20px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+}
+
+.explore-service-options {
+  display: grid;
+  gap: 0;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.explore-service-options li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.explore-service-options li > span {
+  color: var(--forest);
+}
+
+.explore-service-note {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+  .explore-services {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .explore-services-grid {
+    gap: 16px;
+  }
+
+  .explore-service-content {
+    padding: 16px;
+  }
+
+  .explore-service-title-row h3 {
+    font-size: 16px;
+  }
+
+  .explore-service-subtitle {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .explore-services {
+    padding: 16px 20px 56px;
+  }
+
+  .explore-services-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .explore-services-heading h2 {
+    font-size: 28px;
+    letter-spacing: -0.8px;
+  }
+
+  .explore-services-heading > p {
+    max-width: 400px;
+  }
+
+  .explore-services-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .explore-service-image {
+    aspect-ratio: 16 / 9;
+  }
+
+  .explore-service-title-row h3 {
+    font-size: 19px;
+  }
+
+  .explore-service-subtitle {
+    font-size: 22px;
+  }
+
+  .explore-service-content > p {
+    max-width: 100%;
+  }
+
+  .explore-service-dialog-content {
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-service-image img {
+    transition: none;
+  }
+
+  .explore-service-card:hover img,
+  .explore-service-card:focus-visible img {
+    transform: none;
+  }
+}

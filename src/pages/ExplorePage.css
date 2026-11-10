@@ -1,0 +1,1003 @@
+
+/* =========================================
+   CATEGORY HERO
+========================================= */
+
+.explore-page-banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 350px;
+  overflow: hidden;
+  background: var(--forest);
+  color: white;
+}
+
+.explore-page-banner > img {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: exploreHeroReveal 1.2s ease both;
+}
+
+.explore-page-banner-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #071b15e8 0%, #071b158c 48%, #071b1520 100%),
+    linear-gradient(0deg, #071b1540, transparent);
+}
+
+.explore-page-banner-content {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 72px 48px;
+  animation: exploreContentReveal 0.8s 0.15s ease both;
+}
+
+.explore-page-banner-content > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.explore-page-banner-content h1 {
+  margin-top: 17px;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -2.2px;
+}
+
+.explore-page-banner-content p {
+  max-width: 450px;
+  margin-top: 17px;
+  color: rgba(255, 255, 255, 0.83);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   PAGE STRUCTURE
+========================================= */
+
+.explore-page-content {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 48px 85px;
+}
+
+.explore-page-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 30px;
+  padding: 23px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.explore-page-tab {
+  position: relative;
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.explore-page-tab::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--forest);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.explore-page-tab:hover {
+  color: var(--forest);
+}
+
+.explore-page-tab--active {
+  color: var(--forest);
+}
+
+.explore-page-tab--active::after {
+  transform: scaleX(1);
+}
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.explore-page-introduction {
+  max-width: 760px;
+  margin-top: 65px;
+  margin-bottom: 65px;
+}
+
+.explore-section-eyebrow {
+  display: inline-block;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.9px;
+  line-height: 1.6;
+}
+
+.explore-page-introduction h2 {
+  margin-top: 14px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.13;
+  letter-spacing: -1.8px;
+}
+
+.explore-page-introduction p {
+  max-width: 670px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+/* =========================================
+   INFORMATION SECTION HEADINGS
+========================================= */
+
+.explore-information-section {
+  margin-top: 85px;
+}
+
+.explore-information-heading {
+  max-width: 670px;
+  margin-bottom: 30px;
+}
+
+.explore-information-heading > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.explore-information-heading h2 {
+  margin-top: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(27px, 3.4vw, 39px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -1.3px;
+}
+
+.explore-information-heading p {
+  max-width: 590px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   EXPERIENCE / ACCOMMODATION GUIDE CARDS
+========================================= */
+
+.explore-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.explore-guide-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 245px;
+  padding: 25px 23px 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--white);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.explore-guide-card::after {
+  position: absolute;
+  right: -42px;
+  bottom: -65px;
+  width: 145px;
+  height: 145px;
+  border: 1px solid rgba(23, 61, 53, 0.09);
+  border-radius: 50%;
+  content: "";
+  transition: transform 0.5s ease;
+}
+
+.explore-guide-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(23, 61, 53, 0.3);
+  box-shadow: 0 16px 35px rgba(23, 61, 53, 0.07);
+}
+
+.explore-guide-card:hover::after {
+  transform: scale(1.35);
+}
+
+.explore-guide-number {
+  color: #839584;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.explore-guide-card h3 {
+  margin-top: 23px;
+  color: var(--forest);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.45px;
+}
+
+.explore-guide-card > p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.explore-guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 19px;
+}
+
+.explore-guide-tags span {
+  padding: 6px 9px;
+  border: 1px solid rgba(23, 61, 53, 0.12);
+  border-radius: 999px;
+  color: var(--forest);
+  background: var(--sage);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+/* =========================================
+   LISTING SECTION
+========================================= */
+
+.explore-listing-section {
+  margin-top: 90px;
+  padding: 43px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #f8f9f6;
+}
+
+.explore-listing-heading {
+  margin-bottom: 28px;
+}
+
+.explore-listing-heading h2 {
+  margin-top: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(25px, 3vw, 35px);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.explore-listing-heading p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   SEARCH AND FILTERS
+========================================= */
+
+.explore-page-search {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 24px;
+  padding: 15px 18px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--white);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.explore-page-search:focus-within {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px rgba(23, 61, 53, 0.07);
+}
+
+.explore-page-search > span {
+  color: var(--forest);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.explore-page-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 5px 0;
+  outline: none;
+  border: 0;
+  color: var(--text);
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.explore-page-search input::placeholder {
+  color: #929b94;
+}
+
+.explore-page-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 19px;
+}
+
+.explore-page-filters button {
+  min-height: 39px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--forest);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.explore-page-filters button:hover {
+  transform: translateY(-2px);
+  border-color: var(--forest);
+}
+
+.explore-page-filters button.explore-filter-active {
+  border-color: var(--forest);
+  color: white;
+  background: var(--forest);
+}
+
+.explore-page-count {
+  margin: 25px 0 17px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================================
+   LISTING CARDS
+========================================= */
+
+.explore-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.explore-option-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 225px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--white);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.explore-option-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(23, 61, 53, 0.3);
+  box-shadow: 0 12px 25px rgba(23, 61, 53, 0.06);
+}
+
+.explore-option-category {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--forest);
+  background: var(--sage);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.explore-option-number {
+  position: absolute;
+  top: 19px;
+  right: 20px;
+  color: rgba(23, 61, 53, 0.16);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.explore-option-card h3 {
+  margin-top: 20px;
+  padding-right: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.explore-option-card > p {
+  margin: 10px 0 22px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.explore-option-card > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.explore-option-card > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.explore-option-card > a span {
+  font-size: 19px;
+  transition: transform 0.25s ease;
+}
+
+.explore-option-card > a:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* =========================================
+   DESTINATION INSPIRATION
+========================================= */
+
+.explore-destination-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.explore-destination-card {
+  position: relative;
+  min-width: 0;
+  padding: 23px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--white);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.explore-destination-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(23, 61, 53, 0.07);
+}
+
+.explore-destination-card > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.explore-destination-card h3 {
+  margin-top: 12px;
+  color: var(--forest);
+  font-family: "DM Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+}
+
+.explore-destination-card p {
+  min-height: 55px;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.explore-destination-card > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 13px;
+  border-top: 1px solid var(--border);
+  color: var(--forest);
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.explore-destination-card > a span {
+  font-size: 17px;
+}
+
+/* =========================================
+   PLANNING TIPS
+========================================= */
+
+.explore-planning-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  border-top: 1px solid var(--border);
+}
+
+.explore-planning-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 19px;
+  padding: 25px 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.explore-planning-card > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 33px;
+  height: 33px;
+  border: 1px solid rgba(23, 61, 53, 0.2);
+  border-radius: 50%;
+  color: var(--forest);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.explore-planning-card h3 {
+  color: var(--forest);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.explore-planning-card p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   EMPTY STATE AND AVAILABILITY NOTE
+========================================= */
+
+.explore-empty {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+.explore-empty h1,
+.explore-empty h3 {
+  color: var(--forest);
+  font-size: 22px;
+}
+
+.explore-empty p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.explore-empty button {
+  margin-top: 20px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 9px;
+  color: white;
+  background: var(--forest);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.explore-empty > a {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.explore-availability-note {
+  max-width: 850px;
+  margin-top: 30px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   CONTACT BANNER
+========================================= */
+
+.explore-help-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  margin-top: 48px;
+  padding: 42px;
+  overflow: hidden;
+  border-radius: 16px;
+  color: var(--ivory);
+  background: var(--forest);
+}
+
+.explore-help-banner::after {
+  position: absolute;
+  top: -130px;
+  right: 10%;
+  width: 290px;
+  height: 290px;
+  border: 1px solid rgba(247, 245, 239, 0.12);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.explore-help-banner > div {
+  position: relative;
+  z-index: 1;
+  max-width: 570px;
+}
+
+.explore-help-banner > div > span {
+  color: #b9cbb7;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.explore-help-banner h2 {
+  margin-top: 13px;
+  color: var(--ivory);
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(25px, 3vw, 35px);
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.explore-help-banner p {
+  margin-top: 12px;
+  color: rgba(247, 245, 239, 0.72);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.explore-help-banner > a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-shrink: 0;
+  min-height: 48px;
+  padding: 0 19px;
+  border: 1px solid rgba(247, 245, 239, 0.35);
+  border-radius: 999px;
+  color: var(--forest);
+  background: var(--ivory);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.explore-help-banner > a:hover {
+  transform: translateY(-3px);
+  background: white;
+}
+
+.explore-help-banner > a span {
+  font-size: 17px;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes exploreHeroReveal {
+  from {
+    opacity: 0.5;
+    transform: scale(1.06);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes exploreContentReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+  .explore-page-banner-content,
+  .explore-page-content {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .explore-guide-grid,
+  .explore-options-grid,
+  .explore-destination-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .explore-listing-section {
+    padding: 30px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 640px) {
+  .explore-page-banner {
+    min-height: 270px;
+  }
+
+  .explore-page-banner-content,
+  .explore-page-content {
+    padding-right: 19px;
+    padding-left: 19px;
+  }
+
+  .explore-page-banner-content {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .explore-page-banner-content h1 {
+    font-size: 38px;
+    letter-spacing: -1.3px;
+  }
+
+  .explore-page-banner-content p {
+    max-width: 300px;
+    font-size: 12px;
+  }
+
+  .explore-page-tabs {
+    gap: 10px 19px;
+    padding: 19px 0;
+  }
+
+  .explore-page-tab {
+    font-size: 10px;
+  }
+
+  .explore-page-introduction {
+    margin-top: 44px;
+    margin-bottom: 45px;
+  }
+
+  .explore-page-introduction h2 {
+    font-size: 34px;
+    letter-spacing: -1.3px;
+  }
+
+  .explore-page-introduction p {
+    font-size: 12px;
+  }
+
+  .explore-information-section {
+    margin-top: 58px;
+  }
+
+  .explore-information-heading {
+    margin-bottom: 22px;
+  }
+
+  .explore-information-heading h2 {
+    font-size: 28px;
+    letter-spacing: -0.8px;
+  }
+
+  .explore-information-heading p {
+    font-size: 11px;
+  }
+
+  .explore-guide-grid,
+  .explore-options-grid,
+  .explore-destination-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .explore-guide-card {
+    min-height: 210px;
+    padding: 21px;
+  }
+
+  .explore-guide-card h3 {
+    margin-top: 17px;
+    font-size: 17px;
+  }
+
+  .explore-guide-card > p {
+    font-size: 11px;
+  }
+
+  .explore-listing-section {
+    margin-top: 58px;
+    padding: 21px 15px;
+    border-radius: 13px;
+  }
+
+  .explore-listing-heading h2 {
+    font-size: 26px;
+  }
+
+  .explore-page-search {
+    padding: 13px;
+  }
+
+  .explore-page-filters {
+    gap: 7px;
+  }
+
+  .explore-page-filters button {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 9px;
+  }
+
+  .explore-option-card {
+    min-height: 195px;
+    padding: 20px;
+  }
+
+  .explore-destination-card {
+    padding: 21px;
+  }
+
+  .explore-destination-card p {
+    min-height: auto;
+  }
+
+  .explore-planning-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .explore-planning-card {
+    gap: 14px;
+    padding: 21px 0;
+  }
+
+  .explore-planning-card p {
+    font-size: 10px;
+  }
+
+  .explore-help-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 23px;
+    margin-top: 36px;
+    padding: 27px 21px;
+  }
+
+  .explore-help-banner > a {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+  .explore-page-banner-content,
+  .explore-page-content {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .explore-page-banner-content h1 {
+    font-size: 34px;
+  }
+
+  .explore-page-introduction h2 {
+    font-size: 30px;
+  }
+
+  .explore-guide-card,
+  .explore-destination-card {
+    padding: 18px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-page-content *,
+  .explore-page-banner *,
+  .explore-page-content *::before,
+  .explore-page-content *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
