@@ -1,15 +1,15 @@
-﻿
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import "./App.css";
 import useHeroTransition from "./useHeroTransition";
-import PackageCategories from "./components/PackageCategories";
 import FeaturedPackages from "./components/FeaturedPackages";
 import ExploreServices from "./components/ExploreServices";
 import PopularTours from "./components/PopularTours";
 import WhyUs from "./components/WhyUs";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import TripPlanner from "./components/TripPlanner";
 import { useNavigate } from "react-router-dom";
+
 
 const destinations = [
   {
@@ -64,52 +64,85 @@ const destinations = [
 
 const experienceCategories = [
   {
-    name: "Day trips",
-    description: "A whole adventure in one day.",
-    icon: "☀",
-    category: "tours",
-  },
-  {
-    name: "Attractions",
-    description: "Landmarks, tickets and must-sees.",
-    icon: "⌖",
-    category: "attractions",
-  },
-  {
-    name: "Adventure",
+    number: "01",
+    name: "Adventure & Outdoors",
+    shortName: "Adventure",
     description: "Take the scenic route. Then some.",
     icon: "↗",
     category: "adventure",
+    tone: "moss",
   },
   {
-    name: "Culture",
-    description: "Local stories, crafts and heritage.",
+    number: "02",
+    name: "Religious & Spiritual",
+    shortName: "Spiritual",
+    description: "Meaningful journeys, sacred places.",
     icon: "✳",
     category: "culture",
+    tone: "clay",
   },
   {
-    name: "Food experiences",
-    description: "Taste your way around India.",
-    icon: "◒",
-    category: "food",
+    number: "03",
+    name: "Family Holidays",
+    shortName: "Family",
+    description: "A little something for everyone.",
+    icon: "⌂",
+    category: "groups",
+    tone: "sand",
   },
   {
-    name: "Nature escapes",
+    number: "04",
+    name: "Culture & Heritage",
+    shortName: "Heritage",
+    description: "Local stories, crafts and history.",
+    icon: "◇",
+    category: "culture",
+    tone: "olive",
+  },
+  {
+    number: "05",
+    name: "Educational & Group Trips",
+    shortName: "Group trips",
+    description: "Learning, exploring, growing together.",
+    icon: "◎",
+    category: "groups",
+    tone: "blue",
+  },
+  {
+    number: "06",
+    name: "Nature & Wildlife",
+    shortName: "Nature",
     description: "Find your little patch of green.",
     icon: "❋",
     category: "nature",
+    tone: "forest",
   },
   {
-    name: "Water activities",
+    number: "07",
+    name: "Food Experiences",
+    shortName: "Food",
+    description: "Taste your way around India.",
+    icon: "◒",
+    category: "food",
+    tone: "terracotta",
+  },
+  {
+    number: "08",
+    name: "Water & Coastal Escapes",
+    shortName: "Water",
     description: "Make a splash somewhere new.",
     icon: "≈",
     category: "water",
+    tone: "ocean",
   },
   {
-    name: "Stays & retreats",
+    number: "09",
+    name: "Stays & Retreats",
+    shortName: "Stays",
     description: "Somewhere worth staying longer.",
     icon: "⌂",
     category: "stays",
+    tone: "stone",
   },
 ];
 
@@ -128,9 +161,6 @@ export default function App() {
   const navigate = useNavigate();
 
   const [homeCity, setHomeCity] = useState("Bengaluru");
-  const [destination, setDestination] = useState("");
-  const [travelDate, setTravelDate] = useState("");
-  const [searchMessage, setSearchMessage] = useState("");
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [incomingIndex, setIncomingIndex] = useState(null);
@@ -141,7 +171,6 @@ export default function App() {
 
   const activeDestination = destinations[activeIndex];
   const isTransitioning = incomingIndex !== null;
-  const today = getLocalDate(new Date());
 
   const queue = Array.from(
     { length: destinations.length - 1 },
@@ -199,7 +228,6 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [incomingIndex, reducedMotion]);
 
-  // Reveal sections as they enter the viewport.
   useEffect(() => {
     const elements = document.querySelectorAll("[data-reveal]");
 
@@ -239,37 +267,6 @@ export default function App() {
     setIncomingIndex(
       (activeIndex - 1 + destinations.length) % destinations.length
     );
-  }
-
-  function selectNextWeekend() {
-    const nextSaturday = new Date();
-    const daysUntilSaturday = (6 - nextSaturday.getDay() + 7) % 7;
-
-    nextSaturday.setDate(
-      nextSaturday.getDate() + (daysUntilSaturday || 7)
-    );
-
-    setTravelDate(getLocalDate(nextSaturday));
-    setSearchMessage("");
-  }
-
-  function handleSearch(event) {
-    event.preventDefault();
-
-    const selectedDestination = destination.trim();
-
-    if (!selectedDestination) {
-      setSearchMessage("Enter a destination to get started.");
-      return;
-    }
-
-    const params = new URLSearchParams({ q: selectedDestination });
-
-    if (travelDate) {
-      params.set("date", travelDate);
-    }
-
-    navigate(`/packages?${params.toString()}`);
   }
 
   function openExperiences(category) {
@@ -330,7 +327,7 @@ export default function App() {
               been dreaming about. Find your next somewhere.
             </p>
 
-            <a className="hero-link" href="#discovery">
+            <a className="hero-link" href="#experiences">
               Explore experiences
               <span aria-hidden="true">↗</span>
             </a>
@@ -428,85 +425,20 @@ export default function App() {
           </div>
         </section>
 
-        {/* SEARCH */}
-        <section className="discovery" id="discovery" aria-label="Find an experience">
-          <div className="discovery-heading" data-reveal>
-            <span className="section-kicker">THE GOOD PART STARTS HERE</span>
-            <h2>Where are we going?</h2>
-            <p>Pick a place. Pick a date. We'll help you take it from there.</p>
-          </div>
+        {/* TRIP PLANNER */}
+        <TripPlanner />
 
-          <form className="search-panel" onSubmit={handleSearch}>
-            <label className="search-field">
-              <span className="search-field-icon">⌖</span>
-              <span>DESTINATION</span>
-              <input
-                type="text"
-                list="destination-options"
-                placeholder={`Try places near ${homeCity}`}
-                value={destination}
-                onChange={(event) => {
-                  setDestination(event.target.value);
-                  setSearchMessage("");
-                }}
-                required
-              />
-
-              <datalist id="destination-options">
-                {destinations.map((item) => (
-                  <option key={item.name} value={item.name} />
-                ))}
-                <option value="Bengaluru" />
-                <option value="Coorg" />
-                <option value="Mysuru" />
-                <option value="Nandi Hills" />
-                <option value="Lonavala" />
-                <option value="Munnar" />
-              </datalist>
-            </label>
-
-            <label className="search-field date-field">
-              <span className="search-field-icon">◷</span>
-              <span>TRAVEL DATE</span>
-              <input
-                type="date"
-                aria-label="Travel date"
-                min={today}
-                value={travelDate}
-                onChange={(event) => {
-                  setTravelDate(event.target.value);
-                  setSearchMessage("");
-                }}
-              />
-            </label>
-
-            <button
-              type="button"
-              className="weekend-button"
-              onClick={selectNextWeekend}
-            >
-              <span>✳</span>
-              Next weekend
-            </button>
-
-            <button type="submit" className="search-button">
-              Search
-              <span aria-hidden="true">↗</span>
-            </button>
-          </form>
-
-          <p className="search-feedback" role="status">
-            {searchMessage}
-          </p>
-        </section>
-
-        {/* EXPERIENCE CATEGORIES */}
+                {/* EXPERIENCE MARQUEE */}
         <section className="experience-discovery" id="experiences">
-          <div className="section-heading-row" data-reveal>
+          <div className="experience-intro" data-reveal>
             <div>
               <span className="section-kicker">MORE THAN JUST GETAWAYS</span>
-              <h2>Find your kind of <em>somewhere.</em></h2>
-              <p>Little adventures, big memories. Pick what feels like you.</p>
+              <h2>
+                Find your kind of <em>somewhere.</em>
+              </h2>
+              <p>
+                Different moods. Different maps. One place to begin.
+              </p>
             </div>
 
             <button
@@ -518,36 +450,57 @@ export default function App() {
             </button>
           </div>
 
-          <div className="experience-category-grid">
-            {experienceCategories.map((category, index) => (
-              <button
-                type="button"
-                className="experience-category-card"
-                key={category.category}
-                style={{ "--card-delay": `${index * 70}ms` }}
-                onClick={() => openExperiences(category.category)}
-                data-reveal
-              >
-                <span className="category-icon" aria-hidden="true">
-                  {category.icon}
-                </span>
-                <span className="category-card-copy">
-                  <strong>{category.name}</strong>
-                  <small>{category.description}</small>
-                </span>
-                <span className="category-arrow" aria-hidden="true">↗</span>
-              </button>
-            ))}
+          <div className="experience-marquee-row">
+            <div className="experience-marquee-track experience-marquee-left">
+              {[...experienceCategories, ...experienceCategories].map(
+                (category, index) => (
+                  <button
+                    type="button"
+                    className="experience-text-card"
+                    key={`left-${index}`}
+                    onClick={() => openExperiences(category.category)}
+                    tabIndex={index >= experienceCategories.length ? -1 : 0}
+                    aria-hidden={index >= experienceCategories.length}
+                  >
+                    <span>{category.name}</span>
+                    <span className="experience-card-arrow">↗</span>
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+
+          <div className="experience-marquee-row">
+            <div className="experience-marquee-track experience-marquee-right">
+              {[...experienceCategories].reverse().concat(
+                [...experienceCategories].reverse()
+              ).map((category, index) => (
+                <button
+                  type="button"
+                  className="experience-text-card experience-text-card-alt"
+                  key={`right-${index}`}
+                  onClick={() => openExperiences(category.category)}
+                  tabIndex={index >= experienceCategories.length ? -1 : 0}
+                  aria-hidden={index >= experienceCategories.length}
+                >
+                  <span>{category.name}</span>
+                  <span className="experience-card-arrow">↗</span>
+                </button>
+              ))}
+            </div>
           </div>
         </section>
-
         {/* DESTINATION DISCOVERY */}
         <section className="destination-discovery" data-reveal>
           <div className="section-heading-row">
             <div>
               <span className="section-kicker">A COUNTRY FULL OF STORIES</span>
-              <h2>India, in every <em>direction.</em></h2>
-              <p>From mountain air to saltwater days. Where will you go?</p>
+              <h2>
+                India, in every <em>direction.</em>
+              </h2>
+              <p>
+                From mountain air to saltwater days. Where will you go?
+              </p>
             </div>
 
             <button
@@ -581,10 +534,6 @@ export default function App() {
         </section>
 
         {/* EXISTING HOMEPAGE SECTIONS */}
-        <div data-reveal>
-          <PackageCategories />
-        </div>
-
         <div data-reveal>
           <FeaturedPackages />
         </div>

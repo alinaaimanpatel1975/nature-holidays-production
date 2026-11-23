@@ -11,6 +11,7 @@ import {
   clearAdminSession,
   getAdminSession,
   saveAdminSession,
+  API_BASE,
 } from "./adminApi";
 import "./Admin.css";
 
@@ -55,7 +56,7 @@ export function AdminLogin() {
     setLoading(true);
 
     try {
-      const result = await fetch("http://localhost:5000/api/admin/login", {
+      const result = await fetch(`${API_BASE}/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

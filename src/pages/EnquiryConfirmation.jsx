@@ -1,20 +1,25 @@
 
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import {
-  getEnquiryById,
-  subscribeToEnquiryUpdates,
-} from "../utils/enquiryStorage";
 
 import "./EnquiryConfirmation.css";
+
 
 function formatDate(value) {
   if (!value) return "Flexible / not decided";
 
-  return new Date(`${value}T00:00:00`).toLocaleDateString("en-IN", {
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(value)
+    ? new Date(`${value}T00:00:00`)
+    : new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Not specified";
+  }
+
+  return date.toLocaleDateString("en-IN", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -24,38 +29,61 @@ function formatDate(value) {
 function formatCreatedAt(value) {
   if (!value) return "";
 
-  return new Date(value).toLocaleString("en-IN", {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date.toLocaleString("en-IN", {
     dateStyle: "medium",
     timeStyle: "short",
   });
 }
 
+function formatPrice(amount) {
+  if (amount === null || amount === undefined) {
+    return "Price on request";
+  }
+
+  return `₹${new Intl.NumberFormat("en-IN").format(amount)}`;
+}
+
 export default function EnquiryConfirmation() {
   const { id } = useParams();
+  const location = useLocation();
 
-  const [enquiry, setEnquiry] = useState(() => getEnquiryById(id));
+  const [enquiry] = useState(
+    location.state?.enquiry || null
+  );
 
-  useEffect(() => {
-    function refreshEnquiry() {
-      setEnquiry(getEnquiryById(id));
-    }
-
-    refreshEnquiry();
-
-    return subscribeToEnquiryUpdates(refreshEnquiry);
-  }, [id]);
-
-  if (!enquiry) {
+  const isLoading = false;
+  const error = enquiry ? "" : "Your confirmation details aren't available in this browser session.";
+  if (isLoading) {
     return (
       <>
         <Navbar />
 
         <main className="enquiry-missing">
-          <span className="enquiry-eyebrow">ENQUIRY NOT FOUND</span>
-          <h1>This enquiry isn't available here.</h1>
+          <span className="enquiry-eyebrow">PLEASE WAIT</span>
+          <h1>Retrieving your enquiry.</h1>
+          <p>We're loading your submitted trip details.</p>
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
+  if (error || !enquiry) {
+    return (
+      <>
+        <Navbar />
+
+        <main className="enquiry-missing">
+          <span className="enquiry-eyebrow">ENQUIRY UNAVAILABLE</span>
+          <h1>We couldn't retrieve your enquiry.</h1>
           <p>
-            It may have been removed, or it may have been created
-            in a different browser.
+            {error ||
+              "This enquiry could not be found. Please check your reference or contact Nature Holidays."}
           </p>
 
           <Link to="/contact" className="enquiry-primary-link">
@@ -68,7 +96,8 @@ export default function EnquiryConfirmation() {
     );
   }
 
-  const { customer, trip, price } = enquiry;
+  const { customer = {}, trip = {}, price = {}, cart = {} } = enquiry;
+  const cartItems = Array.isArray(cart?.items) ? cart.items : [];
 
   return (
     <>
@@ -102,7 +131,7 @@ export default function EnquiryConfirmation() {
 
           <div className="enquiry-reference">
             <span>YOUR ENQUIRY REFERENCE</span>
-            <strong>{enquiry.id}</strong>
+            <strong>{enquiry.reference || enquiry.id}</strong>
           </div>
 
           <div className="enquiry-status-note" role="status">
@@ -144,8 +173,13 @@ export default function EnquiryConfirmation() {
             </div>
 
             <div className="enquiry-detail-item">
+              <span>Return date</span>
+              <strong>{formatDate(trip.endDate)}</strong>
+            </div>
+
+            <div className="enquiry-detail-item">
               <span>Travellers</span>
-              <strong>{trip.travellers}</strong>
+              <strong>{trip.travellers ?? "Not specified"}</strong>
             </div>
 
             <div className="enquiry-detail-item">
@@ -160,12 +194,27 @@ export default function EnquiryConfirmation() {
 
             <div className="enquiry-detail-item">
               <span>Displayed estimate</span>
-              <strong>{price?.label || "Price on request"}</strong>
+              <strong>
+                {price.label ||
+                  (price.amount != null
+                    ? formatPrice(price.amount)
+                    : "Price on request")}
+              </strong>
             </div>
 
             <div className="enquiry-detail-item">
               <span>Contact name</span>
-              <strong>{customer.name}</strong>
+              <strong>{customer.name || "Not specified"}</strong>
+            </div>
+
+            <div className="enquiry-detail-item">
+              <span>Email address</span>
+              <strong>{customer.email || "Not specified"}</strong>
+            </div>
+
+            <div className="enquiry-detail-item">
+              <span>Phone number</span>
+              <strong>{customer.phone || "Not specified"}</strong>
             </div>
           </div>
 
@@ -173,6 +222,55 @@ export default function EnquiryConfirmation() {
             <div className="enquiry-special-requests">
               <span>Additional requirements</span>
               <p>{trip.requests}</p>
+            </div>
+          )}
+
+          {cartItems.length > 0 && (
+            <div className="enquiry-special-requests">
+              <span>Selected experiences ({cartItems.length})</span>
+
+              <div className="enquiry-confirmation-cart">
+                {cartItems.map((item, index) => (
+                  <article
+                    className="enquiry-confirmation-cart-item"
+                    key={item.cartId || `${item.name}-${index}`}
+                  >
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={item.name || "Selected experience"}
+                      />
+                    )}
+
+                    <div>
+                      <strong>
+                        {item.name || "Selected experience"}
+                      </strong>
+
+                      <p>
+                        {[item.destination, item.packageName]
+                          .filter(Boolean)
+                          .join(" · ") || "Destination not specified"}
+                      </p>
+
+                      <small>
+                        {item.quantity || 1}{" "}
+                        {(item.quantity || 1) === 1
+                          ? "traveller"
+                          : "travellers"}
+                        {item.date ? ` · ${item.date}` : ""}
+                      </small>
+                    </div>
+
+                    <strong>
+                      {item.pricingStatus === "listed" &&
+                      item.total != null
+                        ? formatPrice(item.total)
+                        : "Quote required"}
+                    </strong>
+                  </article>
+                ))}
+              </div>
             </div>
           )}
         </section>

@@ -1,4 +1,8 @@
-﻿const API_BASE = "http://localhost:5000/api";
+﻿
+const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
+).replace(/\/$/, "") + "/api";
+
 const SESSION_KEY = "nature_holidays_admin";
 
 export function getAdminSession() {
@@ -34,9 +38,14 @@ export async function adminRequest(path, options = {}) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    if (response.status === 401) clearAdminSession();
+    if (response.status === 401) {
+      clearAdminSession();
+    }
+
     throw new Error(data.message || "Something went wrong.");
   }
 
   return data;
 }
+
+export { API_BASE };

@@ -34,7 +34,7 @@ const sortOptions = [
 const PRICE_NOTE =
   "Indicative estimate only. Final pricing depends on travel dates, accommodation, group size and confirmed inclusions.";
 
-const packages = [
+const localPackages = [
   {
     id: "mysore-ooty",
     name: "Mysore & Ooty",
@@ -128,6 +128,62 @@ const packages = [
   },
 ];
 
+function normalizeDatabasePackage(item) {
+  const name = String(item.name || "").trim();
+  const rawImage = String(item.image || "").trim();
+
+  // Don't display incomplete records or broken-image cards.
+  if (!name || !rawImage) return null;
+
+  const slug = String(item.slug || "").trim();
+  const id = slug || `database-package-${item.id}`;
+
+  const image = /^https?:\/\//i.test(rawImage)
+  ? rawImage
+  : `http://localhost/nature-holidays-php/public/${rawImage.replace(/^\/+/, "")}`;
+
+  const categoryName = String(item.category_name || "").toLowerCase();
+
+  const categoryMap = {
+    "school & college": ["school-college"],
+    "school and college": ["school-college"],
+    honeymoon: ["honeymoon"],
+    "corporate & group": ["corporate-group"],
+    "corporate and group": ["corporate-group"],
+    family: ["family"],
+    "weekend & day outings": ["weekend"],
+    "weekend and day outings": ["weekend"],
+  };
+
+  const matchedCategory = Object.entries(categoryMap).find(([name]) =>
+    categoryName.includes(name)
+  );
+
+  const tripCategories = matchedCategory ? matchedCategory[1] : [];
+
+  const price = Number(item.indicative_price);
+
+  return {
+    id,
+    databaseId: item.id,
+    name,
+    location: item.destination_names || "India",
+    image,
+    route: item.destination_names || "Route available on request",
+    type: item.category_name || "Travel package",
+    categories: tripCategories,
+    primaryTripType: item.category_name || "Custom Trip",
+    startingPrice:
+      Number.isFinite(price) && price > 0 ? price : null,
+    priceBasis: "per person · indicative estimate",
+    overview:
+      item.short_description ||
+      item.description ||
+      "Contact our team for the latest itinerary and travel details.",
+    priceNote: PRICE_NOTE,
+  };
+}
+
 function localDate() {
   const date = new Date();
 
@@ -146,7 +202,7 @@ function getEnquiryUrl(trip, travelDate, travellers) {
   const params = new URLSearchParams();
 
   params.set("package", trip.name);
-  params.set("packageId", trip.id);
+  params.set("packageId", trip.databaseId || trip.id);
   params.set("tripType", trip.primaryTripType);
   params.set("travellers", String(travellers));
 
@@ -168,6 +224,69 @@ export default function PackagesPage() {
   const [travelDates, setTravelDates] = useState({});
   const [travellers, setTravellers] = useState({});
   const [cartMessage, setCartMessage] = useState("");
+
+
+  const [databasePackages, setDatabasePackages] = useState([]);
+
+useEffect(() => {
+  let cancelled = false;
+
+  async function loadDatabasePackages() {
+    try {
+      const response = await fetch("/api/packages");
+
+      if (!response.ok) {
+        throw new Error("Could not load database packages.");
+      }
+
+      const result = await response.json();
+
+      if (!result.success || !Array.isArray(result.data)) {
+        throw new Error("Unexpected package API response.");
+      }
+
+      const normalized = result.data
+        .map(normalizeDatabasePackage)
+        .filter(Boolean);
+
+      if (!cancelled) {
+        setDatabasePackages(normalized);
+      }
+    } catch (error) {
+      console.error("Package API:", error);
+    }
+  }
+
+  loadDatabasePackages();
+
+  return () => {
+    cancelled = true;
+  };
+}, []);
+
+const packages = useMemo(() => {
+  const existingIds = new Set(
+    localPackages.map((trip) => trip.id)
+  );
+
+  const existingNames = new Set(
+    localPackages.map((trip) => trip.name.trim().toLowerCase())
+  );
+
+  const newDatabasePackages = databasePackages.filter((trip) => {
+    const normalizedName = trip.name.trim().toLowerCase();
+
+    if (existingIds.has(trip.id)) return false;
+    if (existingNames.has(normalizedName)) return false;
+
+    existingIds.add(trip.id);
+    existingNames.add(normalizedName);
+
+    return true;
+  });
+
+  return [...localPackages, ...newDatabasePackages];
+}, [databasePackages]);
 
   const query = searchParams.get("q") || "";
   const requestedCategory = searchParams.get("category") || "all";
@@ -238,7 +357,7 @@ export default function PackagesPage() {
     }
 
     return matching;
-  }, [activeCategory, activeBudget, activeSort, query]);
+  }, [packages, activeCategory, activeBudget, activeSort, query]);
 
   const visiblePackages =
     linkedPackage &&
@@ -295,7 +414,7 @@ export default function PackagesPage() {
 
     addCartItem({
       cartId: `${trip.id}-${Date.now()}`,
-      listingId: trip.id,
+      listingId: trip.databaseId || trip.id,
       name: trip.name,
       destination: trip.location,
       productType: "package",
