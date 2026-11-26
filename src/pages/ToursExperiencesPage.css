@@ -42,7 +42,7 @@
 .te-hero {
   background:
     linear-gradient(90deg, rgba(11, 39, 32, 0.94), rgba(11, 39, 32, 0.54)),
-    url("/images/destinations/munnar.jpg");
+    url("/images/tour-munnar.jpg");
   background-size: cover;
   background-position: center 48%;
   background-color: var(--te-forest);

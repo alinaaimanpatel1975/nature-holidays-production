@@ -3,6 +3,7 @@ import { destinationImages } from "./destination-images";
 
 const catalogue = [
   // KARNATAKA
+
   ["mysore", "Mysore", "Karnataka", "Palaces & heritage", "Royal architecture, gardens and cultural landmarks.", "Mysore palace and heritage city tour;Chamundi Hills half-day excursion;Mysore local food and market walk"],
   ["coorg", "Coorg", "Karnataka", "Coffee estates & nature", "Coffee plantations, waterfalls and Western Ghats landscapes.", "Coorg coffee plantation walk;Abbey Falls and Madikeri day trip;Dubare nature and river experience"],
   ["chikmagalur", "Chikmagalur", "Karnataka", "Coffee hills & viewpoints", "Mountain roads, coffee estates and scenic viewpoints.", "Mullayanagiri and Baba Budangiri day trip;Coffee estate guided experience;Chikmagalur waterfall excursion"],
@@ -249,6 +250,10 @@ export const destinations = places.map((place) => {
         productType: "experience",
         listingStatus: "enquiry-only",
         pricing: "Request a quote",
+
+
+
+
       };
     }
   );

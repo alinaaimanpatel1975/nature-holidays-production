@@ -41,3 +41,6 @@ server/.env
 # Additional server backups
 *backup*
 server-before-*
+
+# Local admin maintenance scripts
+server/reset-admin-password.js

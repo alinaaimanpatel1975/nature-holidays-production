@@ -1,31 +1,138 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-import { destinations } from "../data/destinations";
+import { destinations as localDestinations } from "../data/destinations";
 import Footer from "../components/Footer";
 import "./DestinationsPage.css";
+
+const API_BASE = "http://localhost/nature-holidays-php/public";
+const API_URL = `${API_BASE}/api/destinations`;
 
 export function DestinationNavigation() {
   return <Navbar />;
 }
 
 export default function DestinationsPage() {
+  const [destinations, setDestinations] = useState(localDestinations);
   const [query, setQuery] = useState("");
   const [selectedState, setSelectedState] = useState("All states");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadDestinations() {
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error("Could not load destinations.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.data)) {
+          throw new Error("Invalid destinations response.");
+        }
+
+        const places = result.data.map((place) => {
+          const localPlace = localDestinations.find(
+            (item) =>
+              (place.slug && item.slug === place.slug) ||
+              item.name.toLowerCase() === place.name.toLowerCase()
+          );
+
+          const slug =
+            place.slug ||
+            place.name
+              .toLowerCase()
+              .trim()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-|-$/g, "");
+
+          const apiImage = place.image
+  ? place.image.startsWith("http")
+    ? place.image
+    : place.image.startsWith("/images/")
+      ? `${import.meta.env.BASE_URL}${place.image.slice(1)}`
+      : `${API_BASE}${place.image.startsWith("/") ? "" : "/"}${place.image}`
+  : "";
+
+const image =
+  localPlace?.image ||
+  apiImage ||
+  (place.slug === "nandi-hills" || place.slug === "isha-yoga-center"
+    ? `${import.meta.env.BASE_URL}images/package-nandi-hills.jpg`
+    : place.slug === "pattadakal"
+      ? `${import.meta.env.BASE_URL}images/tour-hampi.jpg`
+      : "");
+
+          return {
+            ...localPlace,
+            ...place,
+            slug,
+            image,
+            theme:
+              place.description ||
+              localPlace?.theme ||
+              place.state ||
+              place.country ||
+              "Explore India",
+          };
+        });
+
+        if (!cancelled) {
+  const apiNames = new Set(
+    places.map((place) => place.name.trim().toLowerCase())
+  );
+
+  const mergedPlaces = [
+    ...places,
+    ...localDestinations.filter(
+      (place) => !apiNames.has(place.name.trim().toLowerCase())
+    ),
+  ];
+
+  setDestinations(mergedPlaces);
+  setError("");
+}
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            "Couldn't connect to the destinations server. Showing saved destinations instead."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadDestinations();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const states = [
     "All states",
-    ...new Set(destinations.map((place) => place.state)),
+    ...new Set(
+      destinations.map((place) => place.state).filter(Boolean)
+    ),
   ];
 
   const visibleDestinations = destinations.filter((place) => {
     const matchesState =
-      selectedState === "All states" || place.state === selectedState;
+      selectedState === "All states" ||
+      place.state === selectedState;
 
     const text =
-      `${place.name} ${place.state} ${place.theme}`.toLowerCase();
+      `${place.name} ${place.state || ""} ${place.theme || ""}`.toLowerCase();
 
     return matchesState && text.includes(query.trim().toLowerCase());
   });
@@ -72,32 +179,46 @@ export default function DestinationsPage() {
               onChange={(event) => setSelectedState(event.target.value)}
             >
               {states.map((state) => (
-                <option key={state}>{state}</option>
+                <option key={state} value={state}>
+                  {state}
+                </option>
               ))}
             </select>
           </label>
         </div>
 
+        {error && (
+          <p role="alert">{error}</p>
+        )}
+
         <p className="destination-result-count" role="status">
-          {visibleDestinations.length} destinations to explore
+          {loading
+            ? "Loading destinations..."
+            : `${visibleDestinations.length} destinations to explore`}
         </p>
 
         <div className="destination-directory-grid">
           {visibleDestinations.map((place) => (
-            <article className="destination-directory-card" key={place.slug}>
+            <article
+              className="destination-directory-card"
+              key={place.id ?? place.slug}
+            >
               <Link
                 className="destination-card-link"
                 to={`/destinations/${place.slug}`}
               >
                 <div className="destination-directory-photo">
-                  <img
-                    src={place.image}
-                    alt={place.name}
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  {place.image && (
+                    <img
+                      src={place.image}
+                      alt={place.name}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+
                   <span className="destination-state-badge">
-                    {place.state}
+                    {place.state || place.country}
                   </span>
                 </div>
 
@@ -113,7 +234,7 @@ export default function DestinationsPage() {
           ))}
         </div>
 
-        {visibleDestinations.length === 0 && (
+        {!loading && visibleDestinations.length === 0 && (
           <div className="destination-no-results">
             <h2>No matching destinations.</h2>
             <p>Try another name or choose a different state.</p>

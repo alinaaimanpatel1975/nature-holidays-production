@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import BrochureTours from "../components/BrochureTours";
 import { addCartItem } from "../utils/cart";
 import "./PackagesPage.css";
-
+import { API_BASE } from "../config/api";
 const categories = [
   { id: "all", name: "All packages" },
   { id: "school-college", name: "School & College" },
@@ -233,7 +233,7 @@ useEffect(() => {
 
   async function loadDatabasePackages() {
     try {
-      const response = await fetch("/api/packages");
+      const response = await fetch(`${API_BASE}/packages`);
 
       if (!response.ok) {
         throw new Error("Could not load database packages.");
