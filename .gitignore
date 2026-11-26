@@ -44,3 +44,13 @@ server-before-*
 
 # Local admin maintenance scripts
 server/reset-admin-password.js
+
+
+# Nature Holidays PHP admin secrets
+/admin/config/database.php
+/admin/.env
+/admin/.env.*
+!/admin/.env.example
+/admin/vendor/
+/admin/storage/
+/admin/*.log
